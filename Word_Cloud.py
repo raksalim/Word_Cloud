@@ -1,19 +1,14 @@
-import matplotlib as mp
-import wordcloud as wc
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from os import path
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 
-file_contents = open('Michelle_Obama_Thoughts_On_Trump.txt', 'r').read()
 
-might_del = """def calculate_frequencies(file_contents):
-    # Here is a list of punctuations and uninteresting words you can use to process your text
-    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
-    uninteresting_words = ["the", "a", "to", "if", "is", "it", "of", "and", "or", "an", "as", "i", "me", "my", \
-    "we", "our", "ours", "you", "your", "yours", "he", "she", "him", "his", "her", "hers", "its", "they", "them", \
-    "their", "what", "which", "who", "whom", "this", "that", "am", "are", "was", "were", "be", "been", "being", \
-    "have", "has", "had", "do", "does", "did", "but", "at", "by", "with", "from", "here", "when", "where", "how", \
-    "all", "any", "both", "each", "few", "more", "some", "such", "no", "nor", "too", "very", "can", "will", "just"]"""
-    
-# LEARNER CODE START HERE
+text_file = open("Michelle_Obama_Speech.txt", "r").read()
+
 
 # strip all unneccessary whitespace
 def del_whitespace(text):
@@ -32,6 +27,15 @@ def del_whitespace(text):
 
     return text
 
+
+def del_all_non_letters(text):
+    alphabet = """ abcdefghijklmnopqrstuvwxyz"""
+
+    for i in range(len(text)):
+        if text[i].lower() not in alphabet:
+            text = text.replace(text[i], " ")
+
+    return text
 
 # get rid of all punctuations   
 def del_punctuations(text):
@@ -81,9 +85,10 @@ def dict_of_word_frequency(source_text):
     text_w_o_whitespace = del_whitespace(source_text)
     text_w_o_punct = del_punctuations(text_w_o_whitespace)
     text_w_o_uninteresting = del_uninteresting(text_w_o_punct)
+    text_only = del_all_non_letters(text_w_o_uninteresting)
 
     #clean text list
-    text_list = text_to_list(text_w_o_uninteresting)
+    text_list = text_to_list(text_only)
 
     #initiate result dict
     result = {}
@@ -102,7 +107,7 @@ def dict_of_word_frequency(source_text):
 
 def main():
 
-    result = dict_of_word_frequency()
+    result = dict_of_word_frequency(text_file)
 
     print(result)
 
