@@ -9,7 +9,7 @@ from text_to_frequency_dict import sorted_frequency_dict
 
 def masked_image_from_freq_dict(text_dict, given_mask):
 
-    wc = WordCloud(background_color="white", max_words=200, mask=given_mask, contour_width=1, contour_color='black')
+    wc = WordCloud(background_color="white", max_words=200, mask=given_mask, contour_width=1, contour_color='purple')
     # generate word cloud
     wc.generate_from_frequencies(text_dict)
 
@@ -25,10 +25,13 @@ def masked_image_from_freq_dict(text_dict, given_mask):
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 # script taken from ham4corpus
-hamilton_full_text = open('Michelle_Obama_Speech.txt', encoding="utf-8").read()
-#print(sorted_frequency_dict(hamilton_full_text))
+text_document = open('black_panther_script', encoding="utf-8").read()
 
-## .png taken from https://www.vhv.rs/viewpic/hTwmwoh_michelle-obama-png-michelle-obama-black-and-white/
-michelle_obama_mask = np.array(Image.open(path.join(d, "filelibertarian-party-ballot-access-locator-map-1996-united-united-states-of-america-png-6000_3710.png")))
+## .png taken from https://favpng.com/png_download/ukQPKw63
+#mask = np.array(Image.open(path.join(d, "FAVPNG_united-states-we-can-do-it-rosie-the-riveter-clip-art_ukQPKw63.png")))
 
-masked_image_from_freq_dict(sorted_frequency_dict(hamilton_full_text), michelle_obama_mask)
+
+## black_panther.png taken from https://www.deviantart.com/camo-flauge/art/Black-Panther-Vibranium-Transparent-729173846
+mask = np.array(Image.open(path.join(d, "black_panther_mask.png")))
+
+masked_image_from_freq_dict(sorted_frequency_dict(text_document), mask)
